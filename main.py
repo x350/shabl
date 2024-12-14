@@ -215,16 +215,16 @@ class Window:
                 'contract_end': self.context['contract_end'].get(),
                 'contract_with': self.context['contract_with'].get(),
                 'nomber_l': self.context['nomber_l'].get(),
-                'complaints': self.context['complaints'].get("1.0", tk.END),  # get("1.0",'end-1c'),
-                'anamnes': self.context['anamnes'].get("1.0", tk.END),
-                'diagnosis': self.context['diagnosis'].get("1.0", tk.END).split(),
+                'complaints': self.context['complaints'].get("1.0", tk.END).strip(),  # get("1.0",'end-1c'),
+                'anamnes': self.context['anamnes'].get("1.0", tk.END).strip(),
+                'diagnosis': self.context['diagnosis'].get("1.0", tk.END).strip(),
                 'damage': self._damages[self.context['damage_var'].get()],
                 'hospitals_predst': ', '.join(
                     [f'{item[0]} с {item[1]} по {item[2]}' for item in self.context['hospitals']]),
                 'hospitals_spravka': ', '.join(
                     [f'c {item[1]} по {item[2]} в {item[0]}' for item in self.context['hospitals']]),
-                'status': self.context['status'].get("1.0", tk.END),
-                'analis': self.context['analis'].get("1.0", tk.END),
+                'status': self.context['status'].get("1.0", tk.END).strip(),
+                'analis': self.context['analis'].get("1.0", tk.END).strip(),
                 'srok': self.context['srok'].get(),
                 'statia': self.context['statia'].get(),
                 'oper': ', '.join([
