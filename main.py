@@ -212,7 +212,9 @@ class Window:
                 'analis': self.context['analis'].get("1.0", tk.END),
                 'srok': self.context['srok'].get(),
                 'statia': self.context['statia'].get(),
-                'oper': ', '.join(self.context['oper']).capitalize(),
+                'oper': ', '.join([
+                    f'Операция от {item[0]}: {item[1]}.' for item in self.context['oper']
+                ]), #   .capitalize(),
                 'f_100': self.context['f_100'].get(),
                 'f_100_data': self.context['f_100_data'].get(),
                 'adres': self.context['adres'].get(),
@@ -279,8 +281,8 @@ class Window:
     def make_all(self):
         # for key, value in self.context.items():
         #     print(key, ' - ', value)
-        print(self.tab_1.children['!entry10'])
-        print(self.get_context())
+        print(self.context['oper'])
+        print(self.get_context()['oper'])
 
     def draw_widgets(self):
         self.tabs_control.grid(sticky='WE')
