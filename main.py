@@ -99,6 +99,7 @@ class Window:
                         'boss': tk.StringVar(),
                         }
         self.context['srok'].set(60)
+        self.context['statia'].set(85)
         # self.context['rest_var'].set(3)
 
         self._hosp = tk.StringVar()
@@ -203,7 +204,7 @@ class Window:
                 'birthday': self.context['birthday'].get(),
                 'rang': self.context['rang'].get(),
                 'vch': self.context['vch'].get(),
-                'who_is': self.context['who_is'].get(),
+                'who_is': self._who_is[self.context['who_is'].get()],
                 'priziv': self.context['priziv'].get(),
                 'dembel': self.context['dembel'].get(),
                 'mobil': self.context['mobil'].get(),
@@ -295,8 +296,15 @@ class Window:
     def make_all(self):
         # for key, value in self.context.items():
         #     print(key, ' - ', value)
-        # print(self.context)
-        print(self.get_context())
+        print(self.context)
+        print(self.get_context()['who_is'])
+        # for key, item in self.tab_1.children.items():
+        #     # print(self.tab_1.children[key].nametowidget(self))
+        #     if item.widgetName == 'entry':
+        #         item.delete(0, tk.END)
+
+
+
 
     def draw_widgets(self):
         self.tabs_control.grid(sticky='WE')
@@ -404,7 +412,6 @@ class Window:
         # # row 6-7
         tk.Label(self.tab_2, text='Жалобы:').grid(row=0, columnspan=4, column=0, stick='we', padx=5, pady=5)
         self.context['complaints'] = ScrolledText(self.tab_2, height=2, wrap=tk.WORD, width=97)
-        # complaints.bind('<< Ctrl-v >>', complaints.clipboard_get())
 
         self.context['complaints'].grid(row=1, column=0, columnspan=5, stick='we', padx=5, pady=5)
         #
@@ -537,7 +544,23 @@ class Window:
 
 
     def sbros(self):
-        print('Сброс!')
+        for _, item in self.tab_1.children.items():
+            if item.widgetName == 'entry':
+                item.delete(0, tk.END)
+        for _, item in self.tab_3.children.items():
+            if item.widgetName == 'entry':
+                item.delete(0, tk.END)
+
+        self._oper.set('')
+        self._added.set('')
+
+        self.context['complaints'].delete('1.0', tk.END)
+        self.context['anamnes'].delete('1.0', tk.END)
+        self.context['status'].delete('1.0', tk.END)
+        self.context['status'].insert("1.0", self.dnevnik)
+        self.context['analis'].delete('1.0', tk.END)
+        self.context['analis'].insert("1.0", self.analizi)
+        self.context['diagnosis'].delete('1.0', tk.END)
 
 
 if __name__ == '__main__':
