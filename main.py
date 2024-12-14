@@ -108,6 +108,15 @@ class Window:
         self._oper_name = tk.StringVar()
         self._oper_date = tk.StringVar()
 
+    dnevnik = '''Состояние удовлетворительное. Дыхание везикулярное, проводится во все отделы, хрипов нет. 
+Пульс 72 в 1 мин. ритмичный. АД 123/76 мм рт. ст.. Язык влажный. Живот не вздут, мягкий, безболезненный во всех отделах.Поколачивание по поясничной области безболезненно. Стул и мочеиспускание в норме. Диурез достаточный.
+Местный статус: '''
+
+    analizi = '''Общий анализ крови от :гемоглобин г/л, эритроциты х10/12, лейкоциты х10/9, тромбоциты х10/9;
+Общий анализ мочи от : в пределах нормы;
+Биохимический анализ крови от :Общий белок г/л, общий билирубин мкмоль/л, мочевина ммоль/л., креатинин мкмоль/л, АлАТ ед/л, АсАТ ед/л.
+Флюорография от : Очаговых и инфильтративных теней не выявлено.'''
+
     def func(self, event):
         self.menu.post(event.x_root, event.y_root)
         self.w = event.widget
@@ -390,11 +399,13 @@ class Window:
         tk.Label(self.tab_2, text='Объективный статус:').grid(row=4, columnspan=4, column=0, stick='we', padx=5, pady=5)
         self.context['status'] = ScrolledText(self.tab_2, height=8, wrap=tk.WORD, width=97)
         self.context['status'].grid(row=5, column=0, columnspan=5, stick='we', padx=5, pady=5)
+        self.context['status'].insert("0.0", self.dnevnik)
 
         tk.Label(self.tab_2, text='Анализы и исследования:').grid(row=6, columnspan=4, column=0, stick='we', padx=5,
                                                                   pady=5)
         self.context['analis'] = ScrolledText(self.tab_2, height=8, wrap=tk.WORD, width=97)
         self.context['analis'].grid(row=7, column=0, columnspan=5, stick='we', padx=5, pady=5)
+        self.context['analis'].insert("0.0", self.analizi)
 
         btn_3 = tk.Button(self.tab_2, text='Предыдущаяя вкладка', bg='#72aee6',
                           command=(lambda: self.tabs_control.select(self.tab_1)))
@@ -504,6 +515,10 @@ class Window:
 
         btn_send = tk.Button(self.tab_3, text='Готово!', bg='#ff6666', command=self.make_all)
         btn_send.grid(row=16, column=0, columnspan=5, stick='we', padx=5, pady=5)
+
+
+
+
 
     def sbros(self):
         print('Сброс!')
