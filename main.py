@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
+from tkinter import filedialog
 
 from docxtpl import DocxTemplate
 from num2words import num2words
-import os
+from pathlib import Path
 import datetime
 
 
@@ -99,7 +100,7 @@ class Window:
                         'boss': tk.StringVar(),
                         }
         self.context['srok'].set(60)
-        self.context['statia'].set(85)
+        self.context['statia'].set(0)
         # self.context['rest_var'].set(3)
 
         self._hosp = tk.StringVar()
@@ -216,7 +217,7 @@ class Window:
                 'nomber_l': self.context['nomber_l'].get(),
                 'complaints': self.context['complaints'].get("1.0", tk.END),  # get("1.0",'end-1c'),
                 'anamnes': self.context['anamnes'].get("1.0", tk.END),
-                'diagnosis': self.context['diagnosis'].get("1.0", tk.END),
+                'diagnosis': self.context['diagnosis'].get("1.0", tk.END).split(),
                 'damage': self._damages[self.context['damage_var'].get()],
                 'hospitals_predst': ', '.join(
                     [f'{item[0]} с {item[1]} по {item[2]}' for item in self.context['hospitals']]),
@@ -234,7 +235,8 @@ class Window:
                 'adres': self.context['adres'].get(),
                 'otdel': self.context['otdel'].get(),
                 'zakluchenie': self.get_zakluchenie(),
-
+                'boss': self.context['boss'].get(),
+                'slave': self.context['slave'].get(),
                 }
         return rend
 
@@ -292,16 +294,44 @@ class Window:
             self.tab_1.children['!entry14'].grid_remove()
 
 
+    def write_file(self, path_dir, file_name, context):
+        document = DocxTemplate(Path('doc') / file_name)
+        document.render(context)
+        document.save(Path(path_dir) / file_name)
 
     def make_all(self):
-        # for key, value in self.context.items():
-        #     print(key, ' - ', value)
-        print(self.context)
-        print(self.get_context()['who_is'])
-        # for key, item in self.tab_1.children.items():
-        #     # print(self.tab_1.children[key].nametowidget(self))
-        #     if item.widgetName == 'entry':
-        #         item.delete(0, tk.END)
+        path_dir = filedialog.askdirectory()
+        context = self.get_context()
+        if self.context['who_is'].get() == 1: # по контракту
+            self.write_file(path_dir, 'predstavl.docx', context)
+            self.write_file(path_dir, 'raport.docx', context)
+            self.write_file(path_dir, 'spravka_o_tajest.docx', context)
+            if self.context['statia'].get():
+                self.write_file(path_dir, 'zakl_hist_bol.docx', context)
+                self.write_file(path_dir, 'zakl_f12.docx', context)
+            else:
+                self.write_file(path_dir, 'zakl_hist_bol_bez_stati.docx', context)
+
+        if self.context['who_is'].get() == 2: # мобилизован
+            self.write_file(path_dir, 'predstavl_mob.docx', context)
+            self.write_file(path_dir, 'raport.docx', context)
+            self.write_file(path_dir, 'spravka_o_tajest.docx', context)
+            if self.context['statia'].get():
+                self.write_file(path_dir, 'zakl_hist_bol.docx', context)
+                self.write_file(path_dir, 'zakl_f12_mobil.docx', context)
+            else:
+                self.write_file(path_dir, 'zakl_hist_bol_bez_stati.docx', context)
+
+        if self.context['who_is'].get() == 3: # по призыву
+            self.write_file(path_dir, 'predstavl_sroch.docx', context)
+            self.write_file(path_dir, 'raport_priziv.docx', context)
+            self.write_file(path_dir, 'spravka_o_tajest_priziv.docx', context)
+            if self.context['statia'].get():
+                self.write_file(path_dir, 'zakl_hist_bol.docx', context)
+                self.write_file(path_dir, 'zakl_f12_priziv.docx', context)
+            else:
+                self.write_file(path_dir, 'zakl_hist_bol_bez_stati.docx', context)
+
 
 
 
@@ -504,7 +534,7 @@ class Window:
         rests = {
             1: 'Санаторий',
             2: 'Без освобождения',
-            3: 'Освобождение:'
+            3: 'Освобождение(суток):'
         }
         tk.Label(self.tab_3, text='Выписан в: ').grid(row=11, column=0, stick='we', padx=5, pady=5)
         for ind, rest in enumerate(sorted(rests)):
@@ -538,9 +568,6 @@ class Window:
 
         btn_send = tk.Button(self.tab_3, text='Готово!', bg='#ff6666', command=self.make_all)
         btn_send.grid(row=16, column=0, columnspan=5, stick='we', padx=5, pady=5)
-
-
-
 
 
     def sbros(self):
