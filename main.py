@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
 
 from docxtpl import DocxTemplate
+from num2words import num2words
 import os
 import datetime
 
@@ -183,6 +184,18 @@ class Window:
             var += 'Операция от ' + item[0] + ': ' + item[1][:70] + '... '  '.\n'
         self._oper.set(var)
 
+    def get_zakluchenie(self):
+        if self._rest_var.get() == 1:
+            return f"На основании статьи «{self.context['statia'].get()}» графы III Расписания болезней* «Г» –  временно не годен к \
+военной службе, необходимо предоставить бесплатную медицинскую реабилитацию в военном санатории \
+на срок 21 сутки."
+        elif self._rest_var.get() == 2:
+            return ''
+        elif self._rest_var.get() == 3:
+            return f"На основании статьи «{self.context['statia'].get()}» графы III Расписания болезней* «Г» – временно \
+не годен к военной службе, необходимо предоставить отпуск по болезни сроком \
+на {self.context['srok'].get()} ({num2words(self.context['srok'].get(), lang='ru')}) суток."
+
     def get_context(self):
         rend = {'data_vvk': self.context['data_vvk'].get(),
                 'data_damage': (self.context['data_damage'].get()),
@@ -219,6 +232,7 @@ class Window:
                 'f_100_data': self.context['f_100_data'].get(),
                 'adres': self.context['adres'].get(),
                 'otdel': self.context['otdel'].get(),
+                'zakluchenie': self.get_zakluchenie(),
 
                 }
         return rend
@@ -281,8 +295,8 @@ class Window:
     def make_all(self):
         # for key, value in self.context.items():
         #     print(key, ' - ', value)
-        print(self.context['oper'])
-        print(self.get_context()['oper'])
+        # print(self.context)
+        print(self.get_context())
 
     def draw_widgets(self):
         self.tabs_control.grid(sticky='WE')
