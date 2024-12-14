@@ -136,7 +136,7 @@ class Window:
         self.context['hospitals'].append(var)
         var = ''
         for item in self.context['hospitals']:
-            var += item[0] + ' с ' + item[1] + ' по ' + item[2] + '\n'
+            var += item[0][:70] + ' с ' + item[1] + ' по ' + item[2] + '... ' + '.\n'
 
         self._added.set(var)
         self._hosp.set('')
@@ -148,7 +148,7 @@ class Window:
             self.context['hospitals'].pop()
         var = ''
         for item in self.context['hospitals']:
-            var += item[0] + ' с ' + item[1] + ' по ' + item[2] + '\n'
+            var += item[0][:70] + ' с ' + item[1] + ' по ' + item[2] + '... ' + '.\n'
         self._added.set(var)
 
     def add_oper(self):
@@ -159,7 +159,7 @@ class Window:
         self.context['oper'].append(var)
         var = ''
         for item in self.context['oper']:
-            var += 'Операция от ' + item[0] + 'г.: ' + item[1] + ';\n'
+            var += 'Операция от ' + item[0] + 'г.: ' + item[1][:70] + '... ;' + '\n'
 
         self._oper.set(var)
         self._oper_name.set('')
@@ -171,8 +171,8 @@ class Window:
         var = ''
         var = ''
         for item in self.context['oper']:
-            var += 'Операция от ' + item[0] + ': ' + item[1] + ';\n'
-        self._added.set(var)
+            var += 'Операция от ' + item[0] + ': ' + item[1][:70] + '... '  '.\n'
+        self._oper.set(var)
 
     def get_context(self):
         rend = {'data_vvk': self.context['data_vvk'].get(),
@@ -238,7 +238,7 @@ class Window:
             self.tab_1.children['!label15'].grid_remove()
             self.tab_1.children['!entry13'].grid_remove()
             self.tab_1.children['!entry14'].grid_remove()
-        elif self.context['who_is'].get() == 2: # мобилизовfн
+        elif self.context['who_is'].get() == 2: # мобилизован
 
             self.tab_1.children['!label14'].grid(row=9, column=0, stick='we', padx=5, pady=5)
             self.tab_1.children['!label15'].grid(row=10, column=0, stick='w', padx=5, pady=5)
@@ -413,7 +413,7 @@ class Window:
         tk.Label(self.tab_3, text='Операции: ').grid(row=2, columnspan=3, column=0, stick='we', padx=5, pady=5)
         #
         oper = tk.Label(self.tab_3, textvariable=self._oper, font='CourierNew 10')
-        oper.grid(row=3, column=0, columnspan=3)
+        oper.grid(row=3, column=0, stick='w', columnspan=3)
         #
 
         oper_name = tk.Entry(self.tab_3, width=20, textvariable=self._oper_name)
@@ -445,14 +445,11 @@ class Window:
                 row=6, column=1 + ind, stick='we', padx=5, pady=5
             )
 
-        tk.Label(self.tab_3, text='Находился на лечении, где и с какого числа по какое число:').grid(row=7,
-                                                                                                     columnspan=3,
-                                                                                                     column=0,
-                                                                                                     stick='we', padx=5,
-                                                                                                     pady=5)
+        tk.Label(self.tab_3, text='Находился на лечении, где и с какого числа по какое число:').grid(
+            row=7, columnspan=3, stick='we', padx=5,  pady=5)
         #
         added = tk.Label(self.tab_3, textvariable=self._added, font='CourierNew 10')
-        added.grid(row=8, column=0, columnspan=3)
+        added.grid(row=8, column=0, stick='w', columnspan=3)
         #
 
         hosp = tk.Entry(self.tab_3, width=20, textvariable=self._hosp)
