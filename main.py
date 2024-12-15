@@ -302,7 +302,10 @@ class Window:
     def make_all(self):
         path_dir = filedialog.askdirectory()
         context = self.get_context()
+        if not context['priziv']:
+            context['priziv'] = 'не служил'
         if self.context['who_is'].get() == 1: # по контракту
+            self.write_file(path_dir, 'protokol_kont.docx', context)
             self.write_file(path_dir, 'predstavl.docx', context)
             self.write_file(path_dir, 'raport.docx', context)
             self.write_file(path_dir, 'spravka_o_tajest.docx', context)
@@ -313,6 +316,7 @@ class Window:
                 self.write_file(path_dir, 'zakl_hist_bol_bez_stati.docx', context)
 
         if self.context['who_is'].get() == 2: # мобилизован
+            self.write_file(path_dir, 'protokol_mobil.docx', context)
             self.write_file(path_dir, 'predstavl_mob.docx', context)
             self.write_file(path_dir, 'raport.docx', context)
             self.write_file(path_dir, 'spravka_o_tajest.docx', context)
@@ -323,6 +327,7 @@ class Window:
                 self.write_file(path_dir, 'zakl_hist_bol_bez_stati.docx', context)
 
         if self.context['who_is'].get() == 3: # по призыву
+            self.write_file(path_dir, 'protokol_priziv.docx', context)
             self.write_file(path_dir, 'predstavl_sroch.docx', context)
             self.write_file(path_dir, 'raport_priziv.docx', context)
             self.write_file(path_dir, 'spravka_o_tajest_priziv.docx', context)
