@@ -346,11 +346,11 @@ class Window:
         # row 0
         tk.Label(self.tab_1, text='Дата представления на ВВК:').grid(row=0, column=0, stick='we', padx=5, pady=5)
         data_vvk = tk.Entry(self.tab_1, width=10, textvariable=self.context['data_vvk'])
-        data_vvk.grid(row=0, column=1, stick='we', padx=5, pady=5)
+        data_vvk.grid(row=0, column=1, stick='w', padx=5, pady=5)
         #
         tk.Label(self.tab_1, text='Дата травмы:').grid(row=0, column=2, stick='we', padx=5, pady=5)
         data_damage = tk.Entry(self.tab_1, width=10, textvariable=self.context['data_damage'])
-        data_damage.grid(row=0, column=3, stick='we', padx=5, pady=5)
+        data_damage.grid(row=0, column=3, stick='w', padx=5, pady=5)
         #
         btn_1 = tk.Button(self.tab_1, text='Сброс', bg='#ff6666', command=self.sbros)
         btn_1.grid(row=0, column=4, stick='we', padx=5, pady=5)
@@ -361,7 +361,7 @@ class Window:
 
         tk.Label(self.tab_1, text='Дата рождения:').grid(row=1, column=3, stick='we', padx=5, pady=5)
         birthday = tk.Entry(self.tab_1, width=10, textvariable=self.context['birthday'])
-        birthday.grid(row=1, column=4, stick='we', padx=5, pady=5)
+        birthday.grid(row=1, column=4, stick='w', padx=5, pady=5)
         #
         tk.Label(self.tab_1, text='Звание:').grid(row=2, column=0, stick='we', padx=5, pady=5)
         rang = tk.Entry(self.tab_1, width=42, textvariable=self.context['rang'])
@@ -380,11 +380,11 @@ class Window:
         #
         tk.Label(self.tab_1, text='Дата призыва, с:').grid(row=5, column=0, stick='we', padx=5, pady=5)
         priziv = tk.Entry(self.tab_1, width=10, textvariable=self.context['priziv'])
-        priziv.grid(row=5, column=1, stick='we', padx=5, pady=5)
+        priziv.grid(row=5, column=1, stick='w', padx=5, pady=5)
         #
         tk.Label(self.tab_1, text='по:').grid(row=5, column=2, stick='we', padx=5, pady=5)
         dembel = tk.Entry(self.tab_1, width=10, textvariable=self.context['dembel'])
-        dembel.grid(row=5, column=3, stick='we', padx=5, pady=5)
+        dembel.grid(row=5, column=3, stick='w', padx=5, pady=5)
 
         tk.Label(self.tab_1, text='Военкомат (призыв):').grid(row=6, column=0, stick='we', padx=5, pady=5)
         voenkomat = tk.Entry(self.tab_1, width=50, textvariable=self.context['voenkomat'])
@@ -396,11 +396,11 @@ class Window:
 
         tk.Label(self.tab_1, text='Начало последнего контракта:').grid(row=7, column=0, stick='we', padx=5, pady=5)
         contract_start = tk.Entry(self.tab_1, width=10, textvariable=self.context['contract_start'])
-        contract_start.grid(row=7, column=1, stick='we', padx=5, pady=5)
+        contract_start.grid(row=7, column=1, stick='w', padx=5, pady=5)
         #
         tk.Label(self.tab_1, text='Окончание последнего контракта:').grid(row=7, column=2, stick='w', padx=5, pady=5)
         contract_end = tk.Entry(self.tab_1, width=10, textvariable=self.context['contract_end'])
-        contract_end.grid(row=7, column=3, stick='we', padx=5, pady=5)
+        contract_end.grid(row=7, column=3, stick='w', padx=5, pady=5)
         #
         tk.Label(self.tab_1, text='Контракт заключен с:').grid(row=8, column=0, stick='we', padx=5, pady=5)
         contract_with = tk.Entry(self.tab_1, width=25, textvariable=self.context['contract_with'])
@@ -409,7 +409,7 @@ class Window:
         #
         tk.Label(self.tab_1, text='Дата мобилизации:').grid(row=9, column=0, stick='w', padx=5, pady=5)
         mobil = tk.Entry(self.tab_1, width=10, textvariable=self.context['mobil'])
-        mobil.grid(row=9, column=1, stick='we', padx=5, pady=5)
+        mobil.grid(row=9, column=1, stick='w', padx=5, pady=5)
         #
 
         tk.Label(self.tab_1, text='Военкомат (мобилизация):').grid(row=10, column=0, stick='we', padx=5, pady=5)
@@ -432,13 +432,15 @@ class Window:
         f_100.grid(row=12, column=1, stick='we', columnspan=2, padx=5, pady=5)
 
         tk.Label(self.tab_1, text='Дата подтверждения:').grid(row=12, column=3, stick='we', padx=5, pady=5)
-
         f_100_data = tk.Entry(self.tab_1, width=10, textvariable=self.context['f_100_data'])
-        f_100_data.grid(row=12, column=4, stick='we', padx=5, pady=5)
+        f_100_data.grid(row=12, column=4, stick='w', padx=5, pady=5)
 
         # tk.Label(self.tab_1, text='Адрес для отправки заключения:').grid(row=9, column=0, stick='we', padx=5, pady=5)
         # f_100_data = tk.Entry(self.tab_1, textvariable=self.context['adres'])
         # f_100_data.grid(row=10, column=1, columnspan=3, stick='we', padx=5, pady=5)
+
+        # Место для реализации радиобатон с выбором типа ВВК: тяжесть, годность, тяжесть с годностью
+        # адрес выше, только диагноз на годность и добавить соответствующие шаблоны файлы в doc
 
         btn_2 = tk.Button(self.tab_1, text='Следующая вкладка', bg='#72aee6',
                           command=(lambda: self.tabs_control.select(self.tab_2)))
