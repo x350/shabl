@@ -8,7 +8,6 @@ from num2words import num2words
 from pathlib import Path
 import datetime
 
-
 # font = 'TimesNewRoman 10'
 # font = 'CourierNew
 
@@ -99,8 +98,8 @@ class Window:
                         'slave': tk.StringVar(),
                         'boss': tk.StringVar(),
                         }
-        self.context['srok'].set(60)
-        self.context['statia'].set(0)
+        self.context['srok'].set('60')
+        self.context['statia'].set('0')
         # self.context['rest_var'].set(3)
 
         self._hosp = tk.StringVar()
@@ -112,12 +111,14 @@ class Window:
         self._oper_date = tk.StringVar()
 
     dnevnik = '''Состояние удовлетворительное. Дыхание везикулярное, проводится во все отделы, хрипов нет. 
-Пульс 72 в 1 мин. ритмичный. АД 123/76 мм рт. ст.. Язык влажный. Живот не вздут, мягкий, безболезненный во всех отделах.Поколачивание по поясничной области безболезненно. Стул и мочеиспускание в норме. Диурез достаточный.
+Пульс 72 в 1 мин. ритмичный. АД 123/76 мм рт. ст.. Язык влажный. Живот не вздут, мягкий, безболезненный во всех отделах.\
+Поколачивание по поясничной области безболезненно. Стул и мочеиспускание в норме. Диурез достаточный.
 Местный статус: '''
 
     analizi = '''Общий анализ крови от :гемоглобин г/л, эритроциты х10/12, лейкоциты х10/9, тромбоциты х10/9;
 Общий анализ мочи от : в пределах нормы;
-Биохимический анализ крови от :Общий белок г/л, общий билирубин мкмоль/л, мочевина ммоль/л., креатинин мкмоль/л, АлАТ ед/л, АсАТ ед/л.
+Биохимический анализ крови от :Общий белок г/л, общий билирубин мкмоль/л, мочевина ммоль/л., креатинин мкмоль/л, \
+АлАТ ед/л, АсАТ ед/л.
 Флюорография от : Очаговых и инфильтративных теней не выявлено.'''
 
     def func(self, event):
@@ -280,7 +281,6 @@ class Window:
             self.tab_1.children['!entry11'].grid_remove()
             self.tab_1.children['!entry12'].grid_remove()
 
-
         elif self.context['who_is'].get() == 3: # призыв
             self.tab_1.children['!label11'].grid_remove()
             self.tab_1.children['!label12'].grid_remove()
@@ -292,8 +292,6 @@ class Window:
             self.tab_1.children['!entry12'].grid_remove()
             self.tab_1.children['!entry13'].grid_remove()
             self.tab_1.children['!entry14'].grid_remove()
-
-
     def write_file(self, path_dir, file_name, context):
         document = DocxTemplate(Path('doc') / file_name)
         document.render(context)
@@ -304,7 +302,7 @@ class Window:
         context = self.get_context()
         if not context['priziv']:
             context['priziv'] = 'не служил'
-        if self.context['who_is'].get() == 1: # по контракту
+        if self.context['who_is'].get() == 1: #по контракту
             self.write_file(path_dir, 'protokol_kont.docx', context)
             self.write_file(path_dir, 'predstavl.docx', context)
             self.write_file(path_dir, 'raport.docx', context)
@@ -315,7 +313,7 @@ class Window:
             else:
                 self.write_file(path_dir, 'zakl_hist_bol_bez_stati.docx', context)
 
-        if self.context['who_is'].get() == 2: # мобилизован
+        if self.context['who_is'].get() == 2: #мобилизован
             self.write_file(path_dir, 'protokol_mobil.docx', context)
             self.write_file(path_dir, 'predstavl_mob.docx', context)
             self.write_file(path_dir, 'raport.docx', context)
@@ -326,7 +324,7 @@ class Window:
             else:
                 self.write_file(path_dir, 'zakl_hist_bol_bez_stati.docx', context)
 
-        if self.context['who_is'].get() == 3: # по призыву
+        if self.context['who_is'].get() == 3:    #по призыву
             self.write_file(path_dir, 'protokol_priziv.docx', context)
             self.write_file(path_dir, 'predstavl_sroch.docx', context)
             self.write_file(path_dir, 'raport_priziv.docx', context)
@@ -336,10 +334,6 @@ class Window:
                 self.write_file(path_dir, 'zakl_f12_priziv.docx', context)
             else:
                 self.write_file(path_dir, 'zakl_hist_bol_bez_stati.docx', context)
-
-
-
-
 
     def draw_widgets(self):
         self.tabs_control.grid(sticky='WE')
@@ -375,7 +369,7 @@ class Window:
         for ind, who in enumerate(sorted(self._who_is)):
             tk.Radiobutton(self.tab_1, text=self._who_is[who], variable=self.context['who_is'], value=who,
                            command=self.make_view_vk).grid(row=3, column=1 + ind, stick='we', padx=5, pady=5)
-        self.context['who_is'].set(1)
+        self.context['who_is'].set('1')
 
         #
         tk.Label(self.tab_1, text='Дата призыва, с:').grid(row=5, column=0, stick='we', padx=5, pady=5)
@@ -390,10 +384,6 @@ class Window:
         voenkomat = tk.Entry(self.tab_1, width=50, textvariable=self.context['voenkomat'])
         voenkomat.grid(row=6, column=1, columnspan=2, stick='we', padx=5, pady=5)
         #
-
-
-        #
-
         tk.Label(self.tab_1, text='Начало последнего контракта:').grid(row=7, column=0, stick='we', padx=5, pady=5)
         contract_start = tk.Entry(self.tab_1, width=10, textvariable=self.context['contract_start'])
         contract_start.grid(row=7, column=1, stick='w', padx=5, pady=5)
@@ -478,22 +468,17 @@ class Window:
         tk.Label(self.tab_3, text='Диагноз:').grid(row=0, columnspan=4, column=0, stick='we', padx=5, pady=5)
         self.context['diagnosis'] = ScrolledText(self.tab_3, height=4, wrap=tk.WORD, width=97)
         self.context['diagnosis'].grid(row=1, column=0, columnspan=5, stick='we', padx=5, pady=5)
-
         #
-
         tk.Label(self.tab_3, text='Операции: ').grid(row=2, columnspan=3, column=0, stick='we', padx=5, pady=5)
         #
         oper = tk.Label(self.tab_3, textvariable=self._oper, font='CourierNew 10')
         oper.grid(row=3, column=0, stick='w', columnspan=3)
         #
-
         oper_name = tk.Entry(self.tab_3, width=20, textvariable=self._oper_name)
         oper_name.grid(row=4, column=0, columnspan=4, stick='we', padx=5, pady=5)
         #
         oper_date = tk.Entry(self.tab_3, width=10, textvariable=self._oper_date)
         oper_date.grid(row=4, column=4, stick='w', padx=5, pady=5)
-        #
-
         #
         btn_add_oper = tk.Button(self.tab_3, text='Добавить', bg='#00cccc', command=self.add_oper)
         btn_add_oper.grid(row=5, column=3, stick='we', padx=5, pady=5)
@@ -506,15 +491,12 @@ class Window:
         #     2: 'Тяжелое',
         #     3: 'Не входит'
         # }
-
-        self.context['damage_var'].set(1)
+        self.context['damage_var'].set('1')
         #
         tk.Label(self.tab_3, text='Тяжесть увечья: ').grid(row=6, column=0, stick='we', padx=5, pady=5)
         for ind, damage in enumerate(sorted(self._damages)):
             tk.Radiobutton(self.tab_3, text=self._damages[damage], variable=self.context['damage_var'],
-                           value=damage).grid(
-                row=6, column=1 + ind, stick='we', padx=5, pady=5
-            )
+                           value=damage).grid(row=6, column=1 + ind, stick='we', padx=5, pady=5)
 
         tk.Label(self.tab_3, text='Находился на лечении, где и с какого числа по какое число:').grid(
             row=7, columnspan=3, stick='we', padx=5,  pady=5)
@@ -522,7 +504,6 @@ class Window:
         added = tk.Label(self.tab_3, textvariable=self._added, font='CourierNew 10')
         added.grid(row=8, column=0, stick='w', columnspan=3)
         #
-
         hosp = tk.Entry(self.tab_3, width=20, textvariable=self._hosp)
         hosp.grid(row=9, column=0, columnspan=2, stick='we', padx=5, pady=5)
         #
@@ -547,7 +528,6 @@ class Window:
         for ind, rest in enumerate(sorted(rests)):
             tk.Radiobutton(self.tab_3, text=rests[rest], indicatoron=0, variable=self._rest_var, value=rest,
                            command=self.make_rest).grid(row=11, column=1 + ind, stick='we', padx=5, pady=5)
-
 
         srok = tk.Entry(self.tab_3, width=3, textvariable=self.context['srok'])
         srok.grid(row=11, column=4, stick='w', padx=5, pady=5)
@@ -575,8 +555,6 @@ class Window:
 
         btn_send = tk.Button(self.tab_3, text='Готово!', bg='#ff6666', command=self.make_all)
         btn_send.grid(row=16, column=0, columnspan=5, stick='we', padx=5, pady=5)
-
-
     def sbros(self):
         for _, item in self.tab_1.children.items():
             if item.widgetName == 'entry':
@@ -595,7 +573,6 @@ class Window:
         self.context['analis'].delete('1.0', tk.END)
         self.context['analis'].insert("1.0", self.analizi)
         self.context['diagnosis'].delete('1.0', tk.END)
-
 
 if __name__ == '__main__':
     win = Window()
