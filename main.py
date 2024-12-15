@@ -5,7 +5,7 @@ from tkinter import filedialog
 
 from docxtpl import DocxTemplate
 from num2words import num2words
-from pathlib import Path
+import os.path
 import datetime
 
 # font = 'TimesNewRoman 10'
@@ -293,9 +293,9 @@ class Window:
             self.tab_1.children['!entry13'].grid_remove()
             self.tab_1.children['!entry14'].grid_remove()
     def write_file(self, path_dir, file_name, context):
-        document = DocxTemplate(Path('doc') / file_name)
+        document = DocxTemplate(os.path.join('doc', file_name))
         document.render(context)
-        document.save(Path(path_dir) / file_name)
+        document.save(os.path.join(path_dir, file_name))
 
     def make_all(self):
         path_dir = filedialog.askdirectory()
