@@ -555,6 +555,7 @@ class Window:
 
         btn_send = tk.Button(self.tab_3, text='Готово!', bg='#ff6666', command=self.make_all)
         btn_send.grid(row=16, column=0, columnspan=5, stick='we', padx=5, pady=5)
+
     def sbros(self):
         for _, item in self.tab_1.children.items():
             if item.widgetName == 'entry':
