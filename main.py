@@ -61,6 +61,7 @@ class Window:
         self._rest_var = tk.IntVar()
         self._rest_var.set(3)
 
+
         self.context = {'data_vvk': tk.StringVar(),
                         'data_damage': tk.StringVar(),
                         'fio': tk.StringVar(),
@@ -189,7 +190,10 @@ class Window:
 
     def get_zakluchenie(self):
         if self._rest_var.get() == 1:
-            return f"На основании статьи «{self.context['statia'].get()}» графы III Расписания болезней* «Г» –  временно не годен к \
+#             return f"На основании статьи «{self.context['statia'].get()}» графы III Расписания болезней* «Г» –  временно не годен к \
+# военной службе, необходимо предоставить бесплатную медицинскую реабилитацию в военном санатории \
+# на срок 21 сутки."
+            return f"«Г» –  временно не годен к \
 военной службе, необходимо предоставить бесплатную медицинскую реабилитацию в военном санатории \
 на срок 21 сутки."
         elif self._rest_var.get() == 2:
@@ -307,6 +311,11 @@ class Window:
             self.write_file(path_dir, 'predstavl.docx', context)
             self.write_file(path_dir, 'raport.docx', context)
             self.write_file(path_dir, 'spravka_o_tajest.docx', context)
+            self.write_file(path_dir, 'svidetelstvo.docx', context)
+            if self._rest_var.get() == 1:
+                self.write_file(path_dir, 'zakl_f12.docx', context)
+                self.write_file(path_dir, 'zakl_hist_bol_bez_stati.docx', context)
+                return
             if self.context['statia'].get():
                 self.write_file(path_dir, 'zakl_hist_bol.docx', context)
                 self.write_file(path_dir, 'zakl_f12.docx', context)
@@ -318,6 +327,11 @@ class Window:
             self.write_file(path_dir, 'predstavl_mob.docx', context)
             self.write_file(path_dir, 'raport.docx', context)
             self.write_file(path_dir, 'spravka_o_tajest.docx', context)
+            self.write_file(path_dir, 'svidetelstvo_mobil.docx', context)
+            if self._rest_var.get() == 1:
+                self.write_file(path_dir, 'zakl_f12_mobil.docx', context)
+                self.write_file(path_dir, 'zakl_hist_bol_bez_stati.docx', context)
+                return
             if self.context['statia'].get():
                 self.write_file(path_dir, 'zakl_hist_bol.docx', context)
                 self.write_file(path_dir, 'zakl_f12_mobil.docx', context)
@@ -329,6 +343,11 @@ class Window:
             self.write_file(path_dir, 'predstavl_sroch.docx', context)
             self.write_file(path_dir, 'raport_priziv.docx', context)
             self.write_file(path_dir, 'spravka_o_tajest_priziv.docx', context)
+            self.write_file(path_dir, 'svidetelstvo_priziv.docx', context)
+            if self._rest_var.get() == 1:
+                self.write_file(path_dir, 'zakl_f12_priziv.docx', context)
+                self.write_file(path_dir, 'zakl_hist_bol_bez_stati.docx', context)
+                return
             if self.context['statia'].get():
                 self.write_file(path_dir, 'zakl_hist_bol.docx', context)
                 self.write_file(path_dir, 'zakl_f12_priziv.docx', context)
@@ -425,16 +444,16 @@ class Window:
         f_100_data = tk.Entry(self.tab_1, width=10, textvariable=self.context['f_100_data'])
         f_100_data.grid(row=12, column=4, stick='w', padx=5, pady=5)
 
-        # tk.Label(self.tab_1, text='Адрес для отправки заключения:').grid(row=9, column=0, stick='we', padx=5, pady=5)
-        # f_100_data = tk.Entry(self.tab_1, textvariable=self.context['adres'])
-        # f_100_data.grid(row=10, column=1, columnspan=3, stick='we', padx=5, pady=5)
+        tk.Label(self.tab_1, text='Адрес для отправки заключения:').grid(row=13, column=0, stick='we', padx=5, pady=5)
+        adress = tk.Entry(self.tab_1, textvariable=self.context['adres'])
+        adress.grid(row=13, column=1, columnspan=3, stick='we', padx=5, pady=5)
 
         # Место для реализации радиобатон с выбором типа ВВК: тяжесть, годность, тяжесть с годностью
         # адрес выше, только диагноз на годность и добавить соответствующие шаблоны файлы в doc
 
         btn_2 = tk.Button(self.tab_1, text='Следующая вкладка', bg='#72aee6',
                           command=(lambda: self.tabs_control.select(self.tab_2)))
-        btn_2.grid(row=13, column=4, stick='we', padx=5, pady=5)
+        btn_2.grid(row=14, column=4, stick='we', padx=5, pady=5)
         #
         # # row 6-7
         tk.Label(self.tab_2, text='Жалобы:').grid(row=0, columnspan=4, column=0, stick='we', padx=5, pady=5)
@@ -491,12 +510,12 @@ class Window:
         #     2: 'Тяжелое',
         #     3: 'Не входит'
         # }
-        self.context['damage_var'].set('1')
+        self.context['damage_var'].set('3')
         #
-        tk.Label(self.tab_3, text='Тяжесть увечья: ').grid(row=6, column=0, stick='we', padx=5, pady=5)
+        tk.Label(self.tab_3, text='Тяжесть увечья: ', background='#f0a5b4').grid(row=6, column=0, stick='we', padx=5, pady=5)
         for ind, damage in enumerate(sorted(self._damages)):
             tk.Radiobutton(self.tab_3, text=self._damages[damage], variable=self.context['damage_var'],
-                           value=damage).grid(row=6, column=1 + ind, stick='we', padx=5, pady=5)
+                           background='#f0a5b4', value=damage).grid(row=6, column=1 + ind, stick='we', padx=5, pady=5)
 
         tk.Label(self.tab_3, text='Находился на лечении, где и с какого числа по какое число:').grid(
             row=7, columnspan=3, stick='we', padx=5,  pady=5)
